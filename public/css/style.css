@@ -1,0 +1,113 @@
+/* ==========================================================================
+   PALETA DE COLORES - BEAUTYSHOP ONLINE
+   ========================================================================== */
+:root {
+    --bs-beauty-primary: #d48b97;      /* Rosa viejo / Maquillaje */
+    --bs-beauty-secondary: #fcebe6;    /* Rosa pastel claro */
+    --bs-beauty-dark: #7a4a51;         /* Marrón/Móvil oscuro para texto y footer */
+    --bs-beauty-accent: #c47281;       /* Rosa intenso para botones hover */
+    --bs-beauty-gold: #d4a373;         /* Dorado para detalles y badges */
+    --bs-beauty-bg-light: #fff8f6;     /* Fondo rosado suave */
+}
+
+body {
+    background-color: var(--bs-beauty-bg-light);
+    color: #4a3b3d;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Personalización del Navbar */
+.bg-beauty-nav {
+    background-color: var(--bs-beauty-secondary) !important;
+    border-bottom: 1px solid rgba(212, 139, 151, 0.2);
+}
+
+.bg-beauty-nav .navbar-brand,
+.bg-beauty-nav .nav-link {
+    color: var(--bs-beauty-dark) !important;
+}
+
+.bg-beauty-nav .nav-link:hover {
+    color: var(--bs-beauty-accent) !important;
+}
+
+/* Botones Personalizados */
+.btn-beauty {
+    background-color: var(--bs-beauty-primary);
+    color: #ffffff;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-beauty:hover {
+    background-color: var(--bs-beauty-accent);
+    color: #ffffff;
+    transform: translateY(-1px);
+}
+
+.btn-outline-beauty {
+    border: 1px solid var(--bs-beauty-primary);
+    color: var(--bs-beauty-primary);
+    background-color: transparent;
+}
+
+.btn-outline-beauty:hover {
+    background-color: var(--bs-beauty-primary);
+    color: #ffffff;
+}
+
+/* Tarjetas y Contenedores */
+.card-beauty {
+    background-color: #ffffff;
+    border: 1px solid rgba(212, 139, 151, 0.15);
+    border-radius: 12px;
+}
+
+.bg-beauty-banner {
+    background: linear-gradient(135deg, #fcebe6 0%, #f7d6d0 100%);
+    border-radius: 16px;
+}
+
+/* Textos e Íconos */
+.text-beauty-primary {
+    color: var(--bs-beauty-primary) !important;
+}
+
+.text-beauty-dark {
+    color: var(--bs-beauty-dark) !important;
+}
+
+/* Footer elegante estilo catálogo */
+.footer-beauty {
+    background-color: var(--bs-beauty-dark);
+    color: #fcebe6;
+}
+
+/* Botones de Filtro por Categoría */
+.btn-beauty-filter {
+    border: 1px solid var(--bs-beauty-primary);
+    color: var(--bs-beauty-dark);
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.btn-beauty-filter:hover,
+.btn-beauty-filter.active {
+    background-color: var(--bs-beauty-primary) !important;
+    color: #ffffff !important;
+    border-color: var(--bs-beauty-primary) !important;
+}
+
+/* Badge de Categoría dentro de la Tarjeta */
+.badge-beauty-cat {
+    background-color: var(--bs-beauty-secondary);
+    color: var(--bs-beauty-dark);
+    border: 1px solid rgba(212, 139, 151, 0.2);
+}
+
+/* Ajuste para imágenes completas sin recorte */
+.img-product-fit {
+    object-fit: contain !important;
+    background-color: #ffffff;
+    padding: 10px;
+}
