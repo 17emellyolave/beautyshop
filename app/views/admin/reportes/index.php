@@ -150,7 +150,7 @@
     </div>
 </div>
 
-<!-- Listado General de Transacciones -->
+<!-- Listado General de Transacciones con Selector de Estado -->
 <div class="card card-beauty shadow-sm border-0">
     <div class="card-header bg-white py-3 border-0">
         <h5 class="fw-bold text-beauty-dark mb-0"><i class="bi bi-list-check me-2 text-beauty-primary"></i>Detalle de Transacciones del Mes</h5>
@@ -163,25 +163,33 @@
                         <th>N° Pedido</th>
                         <th>Fecha y Hora</th>
                         <th>Cliente</th>
-                        <th>Estado</th>
                         <th class="text-end">Monto Total</th>
+                        <th class="text-center" style="width: 200px;">Cambiar Estado</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if (empty($detalle_ventas)): ?>
-                        <tr><td colspan="5" class="text-center py-4 text-muted">No se registrarán pedidos en el mes seleccionado.</td></tr>
+                        <tr><td colspan="5" class="text-center py-4 text-muted">No se registraron pedidos en el mes seleccionado.</td></tr>
                     <?php else: ?>
                         <?php foreach ($detalle_ventas as $dv): ?>
                         <tr>
-                            <td class="fw-bold">#<?= $dv['id_pedido']; ?></td>
+                            <td class="fw-bold text-beauty-dark">#<?= $dv['id_pedido']; ?></td>
                             <td><?= date('d/m/Y H:i', strtotime($dv['fecha_pedido'])); ?></td>
                             <td><?= $dv['cliente']; ?></td>
-                            <td>
-                                <span class="badge bg-<?= $dv['estado'] === 'entregado' || $dv['estado'] === 'pagado' ? 'success' : 'warning text-dark'; ?>">
-                                    <?= ucfirst($dv['estado']); ?>
-                                </span>
+                            <td class="text-end fw-bold text-beauty-primary">$<?= number_format($dv['total'], 0, ',', '.'); ?></td>
+                            <td class="text-center">
+                                <form action="<?= BASE_URL; ?>admin/cambiarEstadoPedido" method="POST" class="d-flex align-items-center justify-content-center gap-1">
+                                    <input type="hidden" name="id_pedido" value="<?= $dv['id_pedido']; ?>">
+                                    
+                                    <select name="estado" class="form-select form-select-sm border-beauty fw-semibold" onchange="this.form.submit()">
+                                        <option value="pendiente" <?= $dv['estado'] === 'pendiente' ? 'selected' : ''; ?>>Pendiente</option>
+                                        <option value="pagado" <?= $dv['estado'] === 'pagado' ? 'selected' : ''; ?>>Pagado</option>
+                                        <option value="enviado" <?= $dv['estado'] === 'enviado' ? 'selected' : ''; ?>>Enviado</option>
+                                        <option value="entregado" <?= $dv['estado'] === 'entregado' ? 'selected' : ''; ?>>Entregado</option>
+                                        <option value="cancelado" <?= $dv['estado'] === 'cancelado' ? 'selected' : ''; ?>>Cancelado</option>
+                                    </select>
+                                </form>
                             </td>
-                            <td class="text-end fw-bold">$<?= number_format($dv['total'], 0, ',', '.'); ?></td>
                         </tr>
                         <?php endforeach; ?>
                     <?php endif; ?>
@@ -190,3 +198,4 @@
         </div>
     </div>
 </div>
+

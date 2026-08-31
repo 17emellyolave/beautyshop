@@ -139,4 +139,35 @@ class AdminController extends Controller {
         $this->view('admin/reportes/index', $data);
     }
 
+
+    // Cambiar estado del pedido desde el panel admin
+    public function cambiarEstadoPedido() {
+        AuthGuard::requireLogin();
+
+        // Verificar si el usuario no es admin (rol 1)
+        if (!isset($_SESSION['user_role_id']) || $_SESSION['user_role_id'] != 1) {
+            $this->redirect('home');
+            return;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $idPedido = filter_input(INPUT_POST, 'id_pedido', FILTER_VALIDATE_INT);
+            $nuevoEstado = trim($_POST['estado'] ?? '');
+
+            $estadosValidos = ['pendiente', 'pagado', 'enviado', 'entregado', 'cancelado'];
+
+            if ($idPedido && in_array($nuevoEstado, $estadosValidos)) {
+                $sql = "UPDATE pedidos SET estado = :estado WHERE id_pedido = :id_pedido";
+                $stmt = Database::getConnection()->prepare($sql);
+                $stmt->bindValue(':estado', $nuevoEstado);
+                $stmt->bindValue(':id_pedido', $idPedido, PDO::PARAM_INT);
+                $stmt->execute();
+            }
+        }
+
+        $this->redirect('admin/reportes');
+    }
+
+
+
 }

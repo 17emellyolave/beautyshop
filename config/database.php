@@ -1,12 +1,12 @@
 <?php
 class Database {
-    private static string $host = 'localhost';
-    private static string $db_name = 'beautyshop_db';
-    private static string $username = 'root';
-    private static string $password = ''; // Ajustar contraseña si aplica
-    private static ?PDO $conn = null;
+    private static $host = 'localhost';
+    private static $db_name = 'beautyshop_db';
+    private static $username = 'root';
+    private static $password = ''; // Ajustar contraseña si aplica
+    private static $conn = null;
 
-    public static function getConnection(): ?PDO {
+    public static function getConnection() {
         if (self::$conn === null) {
             try {
                 $dsn = "mysql:host=" . self::$host . ";dbname=" . self::$db_name . ";charset=utf8mb4";

@@ -1,9 +1,9 @@
 <?php
 class Router {
-    protected string $controllerName = 'HomeController';
-    protected object $controller;
-    protected string $method = 'index';
-    protected array $params = [];
+    protected $controllerName = 'HomeController';
+    protected $controller;
+    protected $method = 'index';
+    protected $params = [];
 
     public function __construct() {
         $url = $this->parseUrl();
@@ -38,7 +38,7 @@ class Router {
         call_user_func_array([$this->controller, $this->method], $this->params);
     }
 
-    private function parseUrl(): array {
+    private function parseUrl() {
         if (isset($_GET['url'])) {
             $url = rtrim($_GET['url'], '/');
             $url = filter_var($url, FILTER_SANITIZE_URL);

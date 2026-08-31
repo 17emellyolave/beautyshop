@@ -1,7 +1,7 @@
 <?php
 class ProductoModel extends Model {
 
-    public function obtenerTodos(): array {
+    public function obtenerTodos() {
         $sql = "SELECT p.*, c.nombre AS categoria_nombre 
                 FROM productos p 
                 INNER JOIN categorias c ON p.id_categoria = c.id_categoria 
@@ -11,7 +11,7 @@ class ProductoModel extends Model {
         return $stmt->fetchAll();
     }
 
-    public function obtenerPorId(int $id): array|false {
+    public function obtenerPorId($id) {
         $sql = "SELECT * FROM productos WHERE id_producto = :id LIMIT 1";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':id', $id, PDO::PARAM_INT);
@@ -19,7 +19,7 @@ class ProductoModel extends Model {
         return $stmt->fetch();
     }
 
-    public function crear(array $datos): bool {
+    public function crear($datos) {
         $sql = "INSERT INTO productos (id_categoria, nombre, descripcion, precio, stock, imagen, estado) 
                 VALUES (:id_categoria, :nombre, :descripcion, :precio, :stock, :imagen, :estado)";
         $stmt = $this->db->prepare($sql);
@@ -33,7 +33,7 @@ class ProductoModel extends Model {
         return $stmt->execute();
     }
 
-    public function actualizar(int $id, array $datos): bool {
+    public function actualizar($id, $datos) {
         $sql = "UPDATE productos 
                 SET id_categoria = :id_categoria, nombre = :nombre, descripcion = :descripcion, 
                     precio = :precio, stock = :stock, imagen = :imagen, estado = :estado 
@@ -50,8 +50,7 @@ class ProductoModel extends Model {
         return $stmt->execute();
     }
 
-    // Obtener productos destacados (los más recientes activos)
-    public function obtenerDestacados(int $limite = 3): array {
+    public function obtenerDestacados($limite = 3) {
         $sql = "SELECT p.*, c.nombre AS categoria_nombre 
                 FROM productos p 
                 INNER JOIN categorias c ON p.id_categoria = c.id_categoria 
@@ -60,9 +59,8 @@ class ProductoModel extends Model {
                 LIMIT :limite";
         
         $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+        $stmt->bindValue(':limite', (int)$limite, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetchAll();
     }
-
 }

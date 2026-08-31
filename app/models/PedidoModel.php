@@ -1,7 +1,8 @@
 <?php
 class PedidoModel extends Model {
 
-    public function crearPedido(array $datosPedido, array $carrito): int|false {
+    // Crear el pedido y descontar el stock usando transacciones SQL
+    public function crearPedido($datosPedido, $carrito) {
         try {
             $this->db->beginTransaction();
 
@@ -16,12 +17,12 @@ class PedidoModel extends Model {
 
             $idPedido = (int)$this->db->lastInsertId();
 
-            // 2. Sentencias preparadas para detalle y descuento de stock (CORREGIDO)
+            // 2. Sentencias preparadas para detalle y descuento de stock
             $sqlDetalle = "INSERT INTO detalle_pedidos (id_pedido, id_producto, cantidad, precio_unitario, subtotal) 
                           VALUES (:id_pedido, :id_producto, :cantidad, :precio_unitario, :subtotal)";
             $stmtDetalle = $this->db->prepare($sqlDetalle);
 
-            // Se usan marcadores distintos para evitar el error de binding en PDO
+            // Uso de marcadores `:cant1` y `:cant2` para evitar errores de binding en PDO
             $sqlStock = "UPDATE productos SET stock = stock - :cant1 WHERE id_producto = :id_producto AND stock >= :cant2";
             $stmtStock = $this->db->prepare($sqlStock);
 
@@ -60,7 +61,8 @@ class PedidoModel extends Model {
         }
     }
 
-    public function obtenerPorUsuario(int $idUsuario): array {
+    // Historial de pedidos por cliente
+    public function obtenerPorUsuario($idUsuario) {
         $sql = "SELECT * FROM pedidos WHERE id_usuario = :id_usuario ORDER BY id_pedido DESC";
         $stmt = $this->db->prepare($sql);
         $stmt->bindValue(':id_usuario', $idUsuario, PDO::PARAM_INT);
