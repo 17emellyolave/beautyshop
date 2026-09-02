@@ -1,5 +1,10 @@
 <?php 
 $totalCarritoItems = isset($_SESSION['carrito']) ? array_sum(array_column($_SESSION['carrito'], 'cantidad')) : 0;
+
+// Variables de sesión seguras con valores por defecto
+$userId     = $_SESSION['user_id'] ?? null;
+$userRoleId = $_SESSION['user_role_id'] ?? null;
+$userName   = $_SESSION['user_name'] ?? 'Usuario';
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -40,16 +45,18 @@ $totalCarritoItems = isset($_SESSION['carrito']) ? array_sum(array_column($_SESS
           </a>
         </li>
 
-        <?php if (isset($_SESSION['user_id'])): ?>
-            <?php if ($_SESSION['user_role_id'] == 1): ?>
+        <?php if ($userId): ?>
+            <?php if ($userRoleId == 1): ?>
               <li class="nav-item">
-                <a class="nav-link text-beauty-primary fw-semibold" href="<?= BASE_URL; ?>admin/dashboard"><i class="bi bi-speedometer2 me-1"></i>Panel Admin</a>
+                <a class="nav-link text-beauty-primary fw-semibold" href="<?= BASE_URL; ?>admin/dashboard">
+                  <i class="bi bi-speedometer2 me-1"></i>Panel Admin
+                </a>
               </li>
             <?php endif; ?>
 
             <li class="nav-item dropdown ms-lg-2">
               <a class="nav-link dropdown-toggle btn btn-outline-beauty px-3 py-1" href="#" role="button" data-bs-toggle="dropdown">
-                <i class="bi bi-person-circle me-1"></i><?= $_SESSION['user_name']; ?>
+                <i class="bi bi-person-circle me-1"></i><?= htmlspecialchars($userName); ?>
               </a>
               <ul class="dropdown-menu dropdown-menu-end border-0 shadow">
                 <li><a class="dropdown-item" href="<?= BASE_URL; ?>tienda/misPedidos"><i class="bi bi-bag-check me-2"></i>Mis Pedidos</a></li>
